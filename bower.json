@@ -1,0 +1,19 @@
+{
+    "name": "test-app",
+    "version": "0.0.1",
+    "dependencies": {
+        "jquery": "1.11.3",
+        "underscore": "latest",
+        "backbone": "latest",
+        "react.backbone": "latest",
+        "backbone-route-control": "latest",
+        "react": "latest"
+    },
+    "install": {
+        "path": {
+            "js": "js/vendors",
+            "css": "css/vendors"
+        }
+    },
+    "private": true
+}
