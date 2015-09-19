@@ -1,8 +1,9 @@
 {
-    "name": "test-app",
-    "version": "0.0.1",
-    "description": "A sample Node.js app",
-    "devDependencies": {
-        "gulp": "^3.9.0"
-    }
+  "name": "test-app",
+  "version": "0.0.1",
+  "description": "A sample Node.js app",
+  "devDependencies": {
+    "browser-sync": "^2.9.3",
+    "gulp": "^3.9.0"
+  }
 }
