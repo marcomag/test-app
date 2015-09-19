@@ -12,7 +12,8 @@
     "install": {
         "path": {
             "js": "js/vendors",
-            "css": "css/vendors"
+            "css": "css/vendors",
+            "scss": "scss/vendors"
         }
     },
     "private": true
