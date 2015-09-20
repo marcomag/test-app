@@ -12,7 +12,7 @@
     "install": {
         "path": {
             "js": "js/vendors",
-            "css": "css/vendors",
+            "css": "scss/vendors",
             "scss": "scss/vendors"
         }
     },

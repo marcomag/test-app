@@ -1,0 +1,19 @@
+html {
+    font-size: $base-font-size;
+    height: 100%;
+}
+body {
+    font-family: $base-font-family;
+    background: $body-bg-color;
+    height: 100%;
+    line-height: $base-line-height;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+.header {
+    width: 50%;
+    text-align: center;
+    @include center-block;
+    @include text-truncate;
+}

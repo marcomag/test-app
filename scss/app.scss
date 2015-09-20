@@ -1,6 +1,20 @@
 @import 'compass/css3';
 
-$color: #ccc;
-body{
-    background: $color;
-}
+// vendors
+
+// common/modules
+@import 'common/modules/utility';
+@import 'common/modules/colors';
+@import 'common/modules/typography';
+@import 'common/modules/layout';
+
+// layout
+@import 'layout/base';
+@import 'layout/header';
+@import 'layout/content';
+@import 'layout/footer';
+@import 'layout/modal';
+@import 'layout/sprites';
+
+// partials
+@import 'partials/listing';

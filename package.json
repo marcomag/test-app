@@ -4,10 +4,47 @@
   "description": "A sample Node.js app",
   "devDependencies": {
     "browser-sync": "^2.9.3",
+    "browserify": "^11.1.0",
+    "browserify-shim": "^3.8.10",
     "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-compass": "^2.1.0",
     "gulp-jshint": "^1.11.2",
     "gulp-util": "^3.0.6",
     "jshint-stylish": "^2.0.1"
+  },
+  "browser": {
+    "jquery": "./js/vendors/jquery/jquery.js",
+    "underscore": "./js/vendors/underscore/underscore.js",
+    "backbone": "./js/vendors/backbone/backbone.js",
+    "react": "./js/vendors/react/react.js",
+    "react.backbone": "./js/vendors/react.backbone/react.backbone.js",
+    "backbone-route-control": "./js/vendors/backbone-route-control/backbone-route-control.js"
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "react": "React",
+    "underscore": "_",
+    "backbone": {
+      "exports": "Backbone",
+      "depends": [
+        "underscore",
+        "jquery"
+      ]
+    },
+    "backbone-route-control": {
+      "depends": "backbone"
+    },
+    "react.backbone": {
+      "depends": [
+        "backbone",
+        "react"
+      ]
+    }
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
   }
 }

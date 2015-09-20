@@ -1,4 +1,4 @@
-css_dir = 'css'
+css_dir = 'build/css'
 sass_dir = 'scss'
 images_dir = 'images'
 javascripts_dir = 'js'
