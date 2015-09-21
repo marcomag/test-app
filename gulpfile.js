@@ -44,4 +44,4 @@ gulp.task('compass', function() {
     .pipe(browserSync.stream());
 });
 
-gulp.task('default', ['bsync']);
+gulp.task('default', ['compass', 'bsync']);

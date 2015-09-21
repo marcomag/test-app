@@ -2,18 +2,28 @@
     "name": "test-app",
     "version": "0.0.1",
     "dependencies": {
-        "jquery": "1.11.3",
-        "underscore": "latest",
         "backbone": "latest",
-        "react.backbone": "latest",
         "backbone-route-control": "latest",
-        "react": "latest"
+        "jquery": "1.11.3",
+        "material-design-lite": "~1.0.4",
+        "react": "latest",
+        "react.backbone": "latest",
+        "underscore": "latest"
     },
     "install": {
         "path": {
             "js": "js/vendors",
             "css": "scss/vendors",
             "scss": "scss/vendors"
+        },
+        "sources" : {
+            "material-design-lite" : {
+                "mapping": [
+                    {
+                        "bower_components/material-design-lite/material.min.css": "_material.scss"
+                    }
+                ]
+            }
         }
     },
     "private": true

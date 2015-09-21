@@ -1,5 +1,1 @@
-var Backbone = require('backbone');
-
-if (typeof NaN === 'number') {
-    console.log('Jesus!');
-}
+var mdl = require('material-design-lite');

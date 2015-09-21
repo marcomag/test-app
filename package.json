@@ -19,7 +19,8 @@
         "backbone": "./js/vendors/backbone/backbone.js",
         "react": "./js/vendors/react/react.js",
         "react.backbone": "./js/vendors/react.backbone/react.backbone.js",
-        "backbone-route-control": "./js/vendors/backbone-route-control/backbone-route-control.js"
+        "backbone-route-control": "./js/vendors/backbone-route-control/backbone-route-control.js",
+        "material-design-lite": "./js/vendors/material-design-lite/material.min.js"
     },
     "browserify-shim": {
         "jquery": "$",
