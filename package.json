@@ -20,7 +20,8 @@
         "react": "./js/vendors/react/react.js",
         "react.backbone": "./js/vendors/react.backbone/react.backbone.js",
         "backbone-route-control": "./js/vendors/backbone-route-control/backbone-route-control.js",
-        "material-design-lite": "./js/vendors/material-design-lite/material.min.js"
+        "material-design-lite": "./js/vendors/material-design-lite/material.min.js",
+        "backbone.radio": "./js/vendors/backbone.radio/backbone.radio.js"
     },
     "browserify-shim": {
         "jquery": "$",
@@ -31,15 +32,6 @@
             "depends": [
                 "underscore",
                 "jquery"
-            ]
-        },
-        "backbone-route-control": {
-            "depends": "backbone"
-        },
-        "react.backbone": {
-            "depends": [
-                "backbone",
-                "react"
             ]
         }
     },
