@@ -1,5 +1,4 @@
 # test-app
-==================================
 
 ## Getting Started
 1. Clone this repository using [Git](http://git-scm.com/): `git clone https://git@github.com:marcomag/test-app.git`
