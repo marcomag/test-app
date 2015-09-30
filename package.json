@@ -1,36 +1,39 @@
 {
-  "name": "test-app",
-  "version": "0.0.1",
-  "description": "A sample Node.js app",
-  "devDependencies": {
-    "backbone": "^1.2.3",
-    "backbone-route-control": "^0.1.0",
-    "backbone.paginator": "^2.0.2",
-    "backbone.radio": "^1.0.2",
-    "bower-installer": "^1.2.0",
-    "browser-sync": "^2.9.3",
-    "browserify": "^11.1.0",
-    "browserify-shim": "^3.8.10",
-    "gulp": "^3.9.0",
-    "gulp-browserify": "^0.5.1",
-    "gulp-compass": "^2.1.0",
-    "gulp-jshint": "^1.11.2",
-    "gulp-react": "^3.0.1",
-    "gulp-util": "^3.0.6",
-    "jquery": "^2.1.4",
-    "jshint-stylish": "^2.0.1",
-    "lazysizes": "^1.2.2",
-    "react": "^0.13.3",
-    "react-infinity": "^1.2.2",
-    "react-prefixr": "^0.1.0",
-    "react.backbone": "^0.6.0",
-    "reactify": "^1.1.1",
-    "underscore": "^1.8.3"
-  },
-  "browser": {
-    "material-design-lite": "./js/vendors/material-design-lite/material.min.js"
-  },
-  "scripts": {
-    "postinstall": "bower-installer && gulp"
-  }
+    "name": "test-app",
+    "version": "0.0.1",
+    "description": "A sample Node.js app",
+    "devDependencies": {
+        "backbone": "^1.2.3",
+        "backbone-route-control": "^0.1.0",
+        "backbone.paginator": "^2.0.2",
+        "backbone.radio": "^1.0.2",
+        "bower-installer": "^1.2.0",
+        "browser-sync": "^2.9.3",
+        "browserify": "^11.1.0",
+        "browserify-shim": "^3.8.10",
+        "gulp": "^3.9.0",
+        "gulp-browserify": "^0.5.1",
+        "gulp-compass": "^2.1.0",
+        "gulp-jshint": "^1.11.2",
+        "gulp-react": "^3.0.1",
+        "gulp-util": "^3.0.6",
+        "jquery": "^2.1.4",
+        "jshint-stylish": "^2.0.1",
+        "lazysizes": "^1.2.2",
+        "react": "^0.13.3",
+        "react-infinity": "^1.2.2",
+        "react-prefixr": "^0.1.0",
+        "react.backbone": "^0.6.0",
+        "reactify": "^1.1.1",
+        "underscore": "^1.8.3"
+    },
+    "engines": {
+        "node": "4.1.0"
+    },
+    "browser": {
+        "material-design-lite": "./js/vendors/material-design-lite/material.min.js"
+    },
+    "scripts": {
+        "postinstall": "bower-installer && gulp"
+    }
 }
