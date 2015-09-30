@@ -34,6 +34,6 @@
         "material-design-lite": "./js/vendors/material-design-lite/material.min.js"
     },
     "scripts": {
-        "postinstall": "bower-installer && gulp"
+        "postinstall": "bower-installer"
     }
 }
