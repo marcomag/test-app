@@ -3,6 +3,8 @@ var gutil       = require('gulp-util');
 var jshint      = require('gulp-jshint');
 var compass     = require('gulp-compass');
 var browserify  = require('gulp-browserify');
+var reactify    = require('reactify');
+var react       = require('gulp-react');
 var browserSync = require('browser-sync').create();
 var reload      = browserSync.reload;
 
@@ -20,6 +22,7 @@ gulp.task('bsync', function() {
 
 gulp.task('jshint', function() {
     return gulp.src(['js/**/*.js', '!js/vendors/**'])
+    .pipe(react())
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
@@ -27,7 +30,8 @@ gulp.task('jshint', function() {
 gulp.task('scripts', function() {
     gulp.src('js/app.js')
     .pipe(browserify({
-        debug : false
+        debug : false,
+        transform: [reactify]
     }))
     .pipe(gulp.dest('./build/js'))
     .pipe(reload({stream: true}));

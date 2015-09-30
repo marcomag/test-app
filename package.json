@@ -3,6 +3,10 @@
     "version": "0.0.1",
     "description": "A sample Node.js app",
     "devDependencies": {
+        "backbone": "^1.2.3",
+        "backbone-route-control": "^0.1.0",
+        "backbone.paginator": "^2.0.2",
+        "backbone.radio": "^1.0.2",
         "browser-sync": "^2.9.3",
         "browserify": "^11.1.0",
         "browserify-shim": "^3.8.10",
@@ -10,34 +14,19 @@
         "gulp-browserify": "^0.5.1",
         "gulp-compass": "^2.1.0",
         "gulp-jshint": "^1.11.2",
+        "gulp-react": "^3.0.1",
         "gulp-util": "^3.0.6",
-        "jshint-stylish": "^2.0.1"
+        "jquery": "^2.1.4",
+        "jshint-stylish": "^2.0.1",
+        "lazysizes": "^1.2.2",
+        "react": "^0.13.3",
+        "react-infinity": "^1.2.2",
+        "react-prefixr": "^0.1.0",
+        "react.backbone": "^0.6.0",
+        "reactify": "^1.1.1",
+        "underscore": "^1.8.3"
     },
     "browser": {
-        "jquery": "./js/vendors/jquery/jquery.js",
-        "underscore": "./js/vendors/underscore/underscore.js",
-        "backbone": "./js/vendors/backbone/backbone.js",
-        "react": "./js/vendors/react/react.js",
-        "react.backbone": "./js/vendors/react.backbone/react.backbone.js",
-        "backbone-route-control": "./js/vendors/backbone-route-control/backbone-route-control.js",
-        "material-design-lite": "./js/vendors/material-design-lite/material.min.js",
-        "backbone.radio": "./js/vendors/backbone.radio/backbone.radio.js"
-    },
-    "browserify-shim": {
-        "jquery": "$",
-        "react": "React",
-        "underscore": "_",
-        "backbone": {
-            "exports": "Backbone",
-            "depends": [
-                "underscore",
-                "jquery"
-            ]
-        }
-    },
-    "browserify": {
-        "transform": [
-            "browserify-shim"
-        ]
+        "material-design-lite": "./js/vendors/material-design-lite/material.min.js"
     }
 }

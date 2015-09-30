@@ -2,14 +2,7 @@
     "name": "test-app",
     "version": "0.0.1",
     "dependencies": {
-        "backbone": "latest",
-        "backbone-route-control": "latest",
-        "jquery": "1.11.3",
-        "material-design-lite": "~1.0.4",
-        "react": "latest",
-        "react.backbone": "latest",
-        "underscore": "latest",
-        "backbone.radio": "latest"
+        "material-design-lite": "~1.0.4"
     },
     "install": {
         "path": {
