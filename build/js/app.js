@@ -21,17 +21,17 @@ var React = require('react');
 var Card = React.createClass({displayName: "Card",
 	render: function(){
 		this.props = this.props.attributes;
-        var photoURL = 'https://farm' + this.props.farm + '.staticflickr.com/' + this.props.server + '/' + this.props.id + '_' + this.props.secret + '_n.jpg';
-        var divStyle = {
-          background: 'url(' + photoURL + ') center / cover'
-        };
-        return (
-            React.createElement("div", {className: "demo-card-image mdl-card mdl-shadow--2dp", style: divStyle}, 
-              React.createElement("div", {className: "mdl-card__title mdl-card--expand"}), 
-              React.createElement("div", {className: "mdl-card__actions"}, 
-                React.createElement("span", {className: "demo-card-image__filename"}, this.props.title)
-              )
-            )
+		var photoURL = 'https://farm' + this.props.farm + '.staticflickr.com/' + this.props.server + '/' + this.props.id + '_' + this.props.secret + '_n.jpg';
+		var divStyle = {
+			background: 'url(' + photoURL + ') center / cover'
+		};
+		return (
+			React.createElement("div", {className: "demo-card-image mdl-card mdl-shadow--2dp", style: divStyle}, 
+			React.createElement("div", {className: "mdl-card__title mdl-card--expand"}), 
+			React.createElement("div", {className: "mdl-card__actions"}, 
+			React.createElement("span", {className: "demo-card-image__filename"}, this.props.title)
+			)
+			)
 		);
 	}
 });

@@ -6626,17 +6626,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.header {
-  width: 50%;
-  text-align: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .mdl-layout__content {
   margin-top: 20px;
 }
