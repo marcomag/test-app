@@ -16,9 +16,34 @@ $.when(Backbone.Radio.request("data", "photo:entities")).done(function(data) {
 
 
 },{"./modules/data/photos.js":3,"./modules/listing/components/infinite.js":4,"backbone":7,"backbone.radio":6,"jquery":9,"material-design-lite":5,"react":187}],2:[function(require,module,exports){
+var $ = require('jquery');
 var React = require('react');
 
 var Card = React.createClass({displayName: "Card",
+	handleClick: function(event) {
+		var rippler = $(event.currentTarget);
+		var ink = rippler.find(".ink");
+
+		// prevent quick double clicks
+		ink.removeClass("animate");
+
+		// set .ink diametr
+		if(!ink.height() && !ink.width())
+		{
+			var d = Math.max(rippler.outerWidth(), rippler.outerHeight());
+			ink.css({height: d, width: d});
+		}
+
+		// get click coordinates
+		var x = event.pageX - rippler.offset().left - ink.width()/2;
+		var y = event.pageY - rippler.offset().top - ink.height()/2;
+
+		// set .ink position and add class .animate
+		ink.css({
+			top: y+'px',
+			left:x+'px'
+		}).addClass("animate");
+	},
 	render: function(){
 		this.props = this.props.attributes;
 		var photoURL = 'https://farm' + this.props.farm + '.staticflickr.com/' + this.props.server + '/' + this.props.id + '_' + this.props.secret + '_n.jpg';
@@ -26,11 +51,12 @@ var Card = React.createClass({displayName: "Card",
 			background: 'url(' + photoURL + ') center / cover'
 		};
 		return (
-			React.createElement("div", {className: "demo-card-image mdl-card mdl-shadow--2dp", style: divStyle}, 
-			React.createElement("div", {className: "mdl-card__title mdl-card--expand"}), 
-			React.createElement("div", {className: "mdl-card__actions"}, 
-			React.createElement("span", {className: "demo-card-image__filename"}, this.props.title)
-			)
+			React.createElement("div", {onClick: this.handleClick, className: "demo-card-image mdl-card mdl-shadow--2dp ripple-effect", style: divStyle}, 
+				React.createElement("div", {className: "mdl-card__title mdl-card--expand"}), 
+				React.createElement("div", {className: "mdl-card__actions"}, 
+					React.createElement("span", {className: "demo-card-image__filename"}, this.props.title)
+				), 
+				React.createElement("span", {className: "ink"})
 			)
 		);
 	}
@@ -39,13 +65,13 @@ var Card = React.createClass({displayName: "Card",
 module.exports = Card;
 
 
-},{"react":187}],3:[function(require,module,exports){
+},{"jquery":9,"react":187}],3:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 require('backbone.radio');
 
 var PhotoCollection = Backbone.Collection.extend({
-    url: "https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=bbe6aa739ed8d4f2e922193fa6ebe4c5&format=json&user_id=36587311@N08&per_page=400",
+    url: "https://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=bbe6aa739ed8d4f2e922193fa6ebe4c5&format=json&user_id=36587311@N08&per_page=500",
     sync : function(method, collection, options) {
         options.dataType = "jsonp";
         options.jsonpCallback = "jsonFlickrApi";
@@ -80,7 +106,7 @@ Backbone.Radio.reply("data", "photo:entities", function (options) {
     return API.getPhotoEntities(options);
 });
 
-module.exports = PhotoCollection;
+//module.exports = PhotoCollection;
 
 
 },{"backbone":7,"backbone.radio":6,"jquery":9}],4:[function(require,module,exports){

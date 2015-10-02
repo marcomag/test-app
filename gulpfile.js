@@ -5,6 +5,7 @@ var compass     = require('gulp-compass');
 var browserify  = require('gulp-browserify');
 var reactify    = require('reactify');
 var react       = require('gulp-react');
+var uglify      = require('gulp-uglify');
 var browserSync = require('browser-sync').create();
 var reload      = browserSync.reload;
 
@@ -28,11 +29,12 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('scripts', function() {
-    gulp.src('js/app.js')
+    gulp.src('js/app.js') // you just need to specify entry point, browserify is gonna take care of the rest
     .pipe(browserify({
         debug : false,
-        transform: [reactify]
+        transform: [reactify] // transform jsx
     }))
+    //.pipe(uglify())
     .pipe(gulp.dest('./build/js'))
     .pipe(reload({stream: true}));
 });
@@ -45,8 +47,8 @@ gulp.task('compass', function() {
         sass: 'scss'
     }))
     .pipe(gulp.dest('build/css'))
-    .pipe(browserSync.stream());
+    .pipe(browserSync.stream()); // inject css
 });
 
 gulp.task('default', ['compass', 'bsync']);
-gulp.task('heroku', ['compass', 'scripts']);
+//gulp.task('heroku', ['compass', 'scripts']);
