@@ -51,4 +51,3 @@ gulp.task('compass', function() {
 });
 
 gulp.task('default', ['compass', 'bsync']);
-//gulp.task('heroku', ['compass', 'scripts']);

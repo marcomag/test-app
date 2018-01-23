@@ -19,7 +19,7 @@ var API = {
     // return object
     getPhotoEntities: function () {
         var photos = new PhotoCollection(),
-        defer = $.Deferred();
+            defer = $.Deferred();
 
         photos.fetch({
             success: function (data) {
