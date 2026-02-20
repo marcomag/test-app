@@ -38,6 +38,19 @@ A simple e-commerce webshop application built with:
    http://localhost:3000
    ```
 
+## Snowplow analytics
+
+Snowplow tracking is wired into the root layout and is enabled only when a collector URL is provided.
+
+Set these environment variables in `.env.local`:
+
+```bash
+NEXT_PUBLIC_SNOWPLOW_COLLECTOR_URL=collector.example.com
+NEXT_PUBLIC_SNOWPLOW_APP_ID=simple-shop
+```
+
+When enabled, the app initializes the Snowplow JavaScript tracker and sends page view, link click, and activity heartbeat events.
+
 ### Run in production mode locally
 
 ```bash
