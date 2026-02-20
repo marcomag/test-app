@@ -13,8 +13,32 @@ const CLICKABLE_IMPRESSION_SCHEMA = 'iglu:com.simple_shop/clickable_impression/j
 const INTERACTION_SCHEMA = 'iglu:com.simple_shop/user_interaction/jsonschema/1-0-0';
 const PRODUCT_VIEW_SCHEMA = 'iglu:com.simple_shop/product_detail_view/jsonschema/1-0-0';
 const SCROLL_SCHEMA = 'iglu:com.simple_shop/scroll_depth/jsonschema/1-0-0';
+const SESSION_STORAGE_KEY = 'snowplowTrackedEvents';
+
+type TrackedEvent = {
+  schema: string;
+  data: Record<string, unknown>;
+  trackedAt: string;
+};
+
+function saveTrackedEvent(event: TrackedEvent) {
+  try {
+    const existing = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+    const parsed = existing ? (JSON.parse(existing) as TrackedEvent[]) : [];
+    parsed.push(event);
+    window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(parsed));
+  } catch {
+    // Ignore session storage failures to avoid breaking tracking.
+  }
+}
 
 function trackSelfDescribingEvent(schema: string, data: Record<string, unknown>) {
+  saveTrackedEvent({
+    schema,
+    data,
+    trackedAt: new Date().toISOString()
+  });
+
   window.snowplow?.('trackSelfDescribingEvent', {
     event: {
       schema,
