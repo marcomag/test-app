@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
+import { SnowplowSignals } from '@/app/snowplow-signals';
 
 export const metadata: Metadata = {
   title: 'Simple Shop',
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <SnowplowSignals />
         {snowplowCollectorUrl ? (
           <>
             <Script
