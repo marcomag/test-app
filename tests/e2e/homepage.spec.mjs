@@ -18,6 +18,14 @@ try {
     throw new Error('No Add to cart buttons found');
   }
 
+  await page.locator('a:has-text("View details")').first().click();
+  await page.waitForSelector('h1');
+
+  const backLink = page.locator('a:has-text("Back to products")');
+  if (!(await backLink.isVisible())) {
+    throw new Error('Product detail page did not render expected back link');
+  }
+
   console.log('Playwright e2e check passed');
 } finally {
   await browser.close();

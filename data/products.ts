@@ -36,3 +36,7 @@ export const products: Product[] = [
     description: 'Lightweight trainers made for daily runs.'
   }
 ];
+
+export function getProductById(id: number): Product | undefined {
+  return products.find((product) => product.id === id);
+}
