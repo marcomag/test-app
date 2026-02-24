@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 declare global {
   interface Window {
@@ -9,6 +10,7 @@ declare global {
 }
 
 const PAGE_TIME_SCHEMA = 'iglu:com.simple_shop/page_time_spent/jsonschema/1-0-0';
+const PAGE_VIEW_SCHEMA = 'iglu:com.simple_shop/page_view/jsonschema/1-0-0';
 const CLICKABLE_IMPRESSION_SCHEMA = 'iglu:com.simple_shop/clickable_impression/jsonschema/1-0-0';
 const INTERACTION_SCHEMA = 'iglu:com.simple_shop/user_interaction/jsonschema/1-0-0';
 const PRODUCT_VIEW_SCHEMA = 'iglu:com.simple_shop/product_detail_view/jsonschema/1-0-0';
@@ -48,6 +50,8 @@ function trackSelfDescribingEvent(schema: string, data: Record<string, unknown>)
 }
 
 export function SnowplowSignals() {
+  const pathname = usePathname();
+
   useEffect(() => {
     let teardown: (() => void) | undefined;
 
@@ -56,10 +60,17 @@ export function SnowplowSignals() {
         return;
       }
 
+      const pagePath = window.location.pathname;
       const pageStart = Date.now();
       let pageTimeSent = false;
       let maxScrollDepth = 0;
       let ticking = false;
+      const hoverStart = new Map<string, number>();
+
+      trackSelfDescribingEvent(PAGE_VIEW_SCHEMA, {
+        pagePath,
+        viewedAt: new Date().toISOString()
+      });
 
       const impressionObserver = new IntersectionObserver(
         (entries) => {
@@ -76,7 +87,7 @@ export function SnowplowSignals() {
 
             trackSelfDescribingEvent(CLICKABLE_IMPRESSION_SCHEMA, {
               elementId: id,
-              pagePath: window.location.pathname,
+              pagePath,
               intersectionRatio: entry.intersectionRatio
             });
             impressionObserver.unobserve(target);
@@ -94,7 +105,7 @@ export function SnowplowSignals() {
         (entries) => {
           entries.forEach((entry) => {
             const target = entry.target as HTMLElement;
-            const productId = target.dataset.spProductDetail;
+            const productId = target.dataset.spProductDetail ?? target.dataset.spProductDetailPage;
             if (!productId) {
               return;
             }
@@ -113,16 +124,18 @@ export function SnowplowSignals() {
             trackSelfDescribingEvent(PRODUCT_VIEW_SCHEMA, {
               productId,
               viewDurationSeconds: Number(((Date.now() - startedAt) / 1000).toFixed(2)),
-              pagePath: window.location.pathname
+              pagePath
             });
           });
         },
         { threshold: [0.5] }
       );
 
-      document.querySelectorAll<HTMLElement>('[data-sp-product-detail]').forEach((element) => {
-        productObserver.observe(element);
-      });
+      document
+        .querySelectorAll<HTMLElement>('[data-sp-product-detail], [data-sp-product-detail-page]')
+        .forEach((element) => {
+          productObserver.observe(element);
+        });
 
       const updateScrollDepth = () => {
         const viewportBottom = window.scrollY + window.innerHeight;
@@ -149,7 +162,7 @@ export function SnowplowSignals() {
         trackSelfDescribingEvent(INTERACTION_SCHEMA, {
           type,
           elementId,
-          pagePath: window.location.pathname,
+          pagePath,
           timestamp: new Date().toISOString()
         });
       };
@@ -163,9 +176,43 @@ export function SnowplowSignals() {
 
       const handleMouseOver = (event: MouseEvent) => {
         const target = (event.target as HTMLElement).closest<HTMLElement>('[data-sp-clickable]');
-        if (target) {
-          trackInteraction('hover', target);
+        if (!target) {
+          return;
         }
+
+        const elementId = target.dataset.spClickable;
+        if (!elementId || hoverStart.has(elementId)) {
+          return;
+        }
+
+        hoverStart.set(elementId, Date.now());
+        trackInteraction('hover', target);
+      };
+
+      const handleMouseOut = (event: MouseEvent) => {
+        const target = (event.target as HTMLElement).closest<HTMLElement>('[data-sp-clickable]');
+        if (!target) {
+          return;
+        }
+
+        const elementId = target.dataset.spClickable;
+        if (!elementId) {
+          return;
+        }
+
+        const startedAt = hoverStart.get(elementId);
+        if (!startedAt) {
+          return;
+        }
+
+        hoverStart.delete(elementId);
+        trackSelfDescribingEvent(INTERACTION_SCHEMA, {
+          type: 'hover_end',
+          elementId,
+          hoverDurationMs: Date.now() - startedAt,
+          pagePath,
+          timestamp: new Date().toISOString()
+        });
       };
 
       const flushProductVisibility = () => {
@@ -174,7 +221,7 @@ export function SnowplowSignals() {
           trackSelfDescribingEvent(PRODUCT_VIEW_SCHEMA, {
             productId,
             viewDurationSeconds: Number(((now - startedAt) / 1000).toFixed(2)),
-            pagePath: window.location.pathname
+            pagePath
           });
         });
         visibleSince.clear();
@@ -182,7 +229,7 @@ export function SnowplowSignals() {
 
       const trackScrollDepth = () => {
         trackSelfDescribingEvent(SCROLL_SCHEMA, {
-          pagePath: window.location.pathname,
+          pagePath,
           maxScrollDepth
         });
       };
@@ -194,7 +241,7 @@ export function SnowplowSignals() {
 
         pageTimeSent = true;
         trackSelfDescribingEvent(PAGE_TIME_SCHEMA, {
-          pagePath: window.location.pathname,
+          pagePath,
           timeSpentSeconds: Number(((Date.now() - pageStart) / 1000).toFixed(2))
         });
       };
@@ -217,6 +264,7 @@ export function SnowplowSignals() {
       window.addEventListener('scroll', handleScroll, { passive: true });
       document.addEventListener('click', handleClick);
       document.addEventListener('mouseover', handleMouseOver);
+      document.addEventListener('mouseout', handleMouseOut);
       document.addEventListener('visibilitychange', handleVisibilityChange);
       window.addEventListener('beforeunload', handleBeforeUnload);
 
@@ -230,6 +278,7 @@ export function SnowplowSignals() {
         window.removeEventListener('scroll', handleScroll);
         document.removeEventListener('click', handleClick);
         document.removeEventListener('mouseover', handleMouseOver);
+        document.removeEventListener('mouseout', handleMouseOut);
         document.removeEventListener('visibilitychange', handleVisibilityChange);
         window.removeEventListener('beforeunload', handleBeforeUnload);
       };
@@ -242,7 +291,7 @@ export function SnowplowSignals() {
       window.clearInterval(interval);
       teardown?.();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
